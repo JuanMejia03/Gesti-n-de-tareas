@@ -18,11 +18,11 @@
   <div id="errorMsg" style="color: red;"></div>
 
   <script>
-    document.getElementById(loginform).addEventListener("submit", async function(e) {
+    document.getElementById("loginform").addEventListener("submit", async function(e) {
       e.preventDefault();
       const formData = new FormData(this);
 
-      const response = await fetch("/app/controllers/AuthController.php?action=login", {
+      const response = await fetch("/TaskManager/app/controllers/AuthController.php?action=login", {
         method: "POST",
         body: formData
       });
@@ -30,11 +30,12 @@
       const result = await response.json();
 
       if (result.success) {
-        window.location.href = "/views/dashboard.php";
+        window.location.href = "/TaskManager/views/dashboard.php";
       } else {
         document.getElementById("errorMsg").textContent = result.message;
       }
     });
+
   </script>
 
 </body>
