@@ -29,9 +29,7 @@ if (!isset($_SESSION['user_id'])) {
         <!-- aqui poner las tareas beibi -->
     </div>
 
-    <script>
-
-    </script>
+    <script src="../assets/js/actions.js"></script>
 
 </body>
 

@@ -21,7 +21,7 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($found && password_verify($password, $found['password'])) {
         $_SESSION['user_id'] = $found['id'];
         $_SESSION['username'] = $found['username'];
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true, 'redirect' => "/TaskManager/views/dashboard.php"]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Usuario o contraseña incorrecta papa']);
     }

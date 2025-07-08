@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <h1>GERS</h1>
   <h2>Login</h2>
   <form id="loginform">
     <input type="text" name="username" id="username" placeholder="Usuario" required><br>
@@ -17,26 +18,7 @@
 
   <div id="errorMsg" style="color: red;"></div>
 
-  <script>
-    document.getElementById("loginform").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-
-      const response = await fetch("/TaskManager/app/controllers/AuthController.php?action=login", {
-        method: "POST",
-        body: formData
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        window.location.href = "/TaskManager/views/dashboard.php";
-      } else {
-        document.getElementById("errorMsg").textContent = result.message;
-      }
-    });
-
-  </script>
+<script src="../assets/js/actions.js"></script>
 
 </body>
 
