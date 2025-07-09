@@ -8,6 +8,7 @@ require_once '../models/task.php';
 
 $action = $_GET['action'] ?? '';
 
+//para imprimir las dferentes tareas en la base de datos
 if ($action === 'list' && isset($_SESSION['user_id'])) {
     $taskModel = new Task();
     $tasks = $taskModel->getByUser($_SESSION['user_id']);
@@ -16,6 +17,8 @@ if ($action === 'list' && isset($_SESSION['user_id'])) {
     exit;
 }
 
+
+//para la creacion de las nuevas tareas
 if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['success' => false, 'message' => 'No autenticado']);
@@ -37,6 +40,8 @@ if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+
+//para la eliminacion de las tareas
 if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $task_id = $_POST['id'] ?? null;
@@ -50,5 +55,24 @@ if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $deleted = $taskModel->delete($task_id, $_SESSION['user_id']);
 
     echo json_encode(['success' => $deleted]);
+    exit;
+}
+
+
+//para la edicion de tareas
+if($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $task_id = $_POST['id'] ?? null;
+    $title = trim($_POST['title'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+
+    if(!$task_id || strlen($title) < 3){
+        echo json_encode(['success' => false, 'message' => 'datos invalidos']);
+        exit;
+    }
+    
+    $taskModel = new Task();
+    $updated = $taskModel->update($task_id, $_SESSION['user_id'], $title, $description);
+
+    echo json_encode(['success' => $updated]);
     exit;
 }

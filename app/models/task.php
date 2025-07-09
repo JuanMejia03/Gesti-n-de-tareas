@@ -25,4 +25,11 @@ class Task
         $stmt = $db->prepare("DELETE FROM tasks WHERE id = ? AND user_id = ?");
         return $stmt->execute( [$task_id, $user_id]);
     }
+
+    public function update($task_id, $user_id, $title, $description)
+    {
+        $db = getConnection();
+        $stmt = $db->prepare("UPDATE task SET title = ?, decription = ? WHERE id = ? and user_id = ?");
+        return $stmt->execute([$title, $description, $task_id, $user_id]);
+    }
 }

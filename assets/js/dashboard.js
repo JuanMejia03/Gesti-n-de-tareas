@@ -1,13 +1,12 @@
 async function cargarTareas() {
   try {
-    const response = await fetch(
-      "/TaskManager/app/controllers/TaskController.php?action=list"
-    );
+    //Peticion para las tareas
+    const response = await fetch("/TaskManager/app/controllers/TaskController.php?action=list");
     const result = await response.json();
 
     const container = document.getElementById("tasklist");
     container.innerHTML = "";
-
+    //Creacion de un listado de las tareas dependiendo del tamaño del arreglo 
     if (result.success && result.tasks.length > 0) {
       result.tasks.forEach((task) => {
         const estado = task.is_completed == 1 ? "Completada" : "Pendiente";
@@ -15,6 +14,7 @@ async function cargarTareas() {
 
         const div = document.createElement("div");
 
+        //Creacion del boton eliminar
         const btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
         btnEliminar.addEventListener("click", async () => {
@@ -24,8 +24,7 @@ async function cargarTareas() {
           const formData = new FormData();
           formData.append("id", task.id);
 
-          const res = await fetch(
-            "/TaskManager/app/controllers/TaskController.php?action=delete",
+          const res = await fetch("/TaskManager/app/controllers/TaskController.php?action=delete",
             {
               method: "POST",
               body: formData,
@@ -45,6 +44,17 @@ async function cargarTareas() {
           }
         });
 
+                //boton para editar
+        const btnEditar = document.createElement("button");
+        btnEditar.textContent = "Editar";
+        btnEditar.addEventListener('click', () => {
+          document.getElementById("editTaskId").value = task.id;
+          document.getElementById("editTitle").value = task.title;
+          document.getElementById("editDescription").value = task.description ?? "";
+          document.getElementById("editModal").style.display = "flex";
+        });
+
+        // impresion de los valores de cada campo 
         div.innerHTML = `
                         <strong>${task.title}</strong><br>
                         <em>${task.description ?? "Sin descripción"}</em><br>
@@ -52,8 +62,10 @@ async function cargarTareas() {
                         Creada: ${fecha}
                     `;
 
+                //uniendo los diferentes elemonts al nodo pricnipal dhaaaa
         div.appendChild(document.createElement("br"));
         div.appendChild(btnEliminar);
+        div.appendChild(btnEditar);
         div.appendChild(document.createElement("hr"));
         container.appendChild(div);
       });
@@ -68,3 +80,34 @@ async function cargarTareas() {
 }
 
 document.addEventListener("DOMContentLoaded", cargarTareas);
+
+//para guardar los cambis realizdos en el modal papito bello 
+
+document.getElementById("ediForm").addEventListener('submit', async(e) => {
+  e.preventDefault();
+
+  const id = document.getElementById("editTaskId").value;
+  const title = document.getElementById("editTitle").value;
+  const description = document.getElementById("editDescription").value;
+
+  const formData = new FormData();
+  formData.append("id", id);
+  formData.append("title", title);
+  formData.append("description", description);
+
+  const res = await fetch("/TaskManager/app/controllers/TaskController.php?action=update", {
+    method: "POST",
+    body: formData,
+  });
+
+  const result = await res.json();
+
+  if(result.success) {
+    alert("Tarea actualizada correctamente");
+  }
+});
+
+//para cancelar el modal 
+document.getElementById("cancelEdit").addEventListener('click', () => {
+  document.getElementById("editModal").style.display = "none"
+});
