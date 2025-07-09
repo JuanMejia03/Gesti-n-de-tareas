@@ -18,18 +18,20 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['username']) ?></h2>
+
+<h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['username']) ?></h2>
+
+<div id="tasklist"></div>
 
     <a href="/TaskManager/app/controllers/authController.php?action=logout">Cerrar sesión</a>
+    <a href="/TaskManager/views/task/create.php">crear tarea</a>
 
     <hr>
 
-    <h3>Tus tareas</h3>
-    <div id="tasklist">
-        <!-- aqui poner las tareas beibi -->
-    </div>
 
-    <script src="../assets/js/actions.js"></script>
+<script src="../assets/js/dashboard.js">
+
+</script>
 
 </body>
 

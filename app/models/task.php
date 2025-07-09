@@ -11,4 +11,12 @@ class Task
         $stml->execute([$user_id]);
         return $stml->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function create($user_id, $title, $description)
+    {
+        $db = getConnection();
+        $stmt = $db->prepare("INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)");
+        return $stmt->execute([$user_id, $title, $description]);
+    }
+    
 }

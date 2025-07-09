@@ -1,5 +1,4 @@
-   
-   //scripts necesarios para el login mybro
+
    document.getElementById("loginform").addEventListener("submit", async function(e) {
       e.preventDefault();
       const formData = new FormData(this);
@@ -17,3 +16,6 @@
         document.getElementById("errorMsg").textContent = result.message;
       }
     });
+
+
+    

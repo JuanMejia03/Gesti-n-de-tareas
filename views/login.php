@@ -18,7 +18,7 @@
 
   <div id="errorMsg" style="color: red;"></div>
 
-<script src="../assets/js/actions.js"></script>
+<script src="../assets/js/login.js"></script>
 
 </body>
 
