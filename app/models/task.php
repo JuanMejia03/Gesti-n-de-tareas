@@ -19,4 +19,10 @@ class Task
         return $stmt->execute([$user_id, $title, $description]);
     }
     
+    public function delete($task_id, $user_id)
+    {
+        $db = getConnection();
+        $stmt = $db->prepare("DELETE FROM tasks WHERE id = ? AND user_id = ?");
+        return $stmt->execute( [$task_id, $user_id]);
+    }
 }

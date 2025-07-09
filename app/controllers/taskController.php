@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+header('Content-Type: application/json');
+
 require_once '../../config/database.php';
 require_once '../models/task.php';
 
@@ -11,6 +13,7 @@ if ($action === 'list' && isset($_SESSION['user_id'])) {
     $tasks = $taskModel->getByUser($_SESSION['user_id']);
 
     echo json_encode(['success' => true, 'tasks' => $tasks]);
+    exit;
 }
 
 if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -31,4 +34,21 @@ if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $saved = $taskModel->create($_SESSION['user_id'], $title, $description);
 
     echo json_encode(['success' => $saved]);
+    exit;
+}
+
+if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $task_id = $_POST['id'] ?? null;
+
+    if (!$task_id) {
+        echo json_encode(['success' => false, 'menssage' => 'id de tarea invalida']);
+        exit;
+    }
+
+    $taskModel = new Task();
+    $deleted = $taskModel->delete($task_id, $_SESSION['user_id']);
+
+    echo json_encode(['success' => $deleted]);
+    exit;
 }
