@@ -23,6 +23,7 @@ if (!isset($_SESSION['user_id'])) {
         <input type="text" name="title" id="title" placeholder="Título" required><br>
         <textarea name="description" id="description" placeholder="Descripción"></textarea><br>
         <button type="submit">Crear tarea</button>
+        <button type="button" onclick="window.history.back()">cancelar</button>
     </form>
 
     <div id="formMsg" style="color: green;"></div>

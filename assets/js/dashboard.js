@@ -6,7 +6,7 @@ async function cargarTareas() {
 
     const container = document.getElementById("tasklist");
     container.innerHTML = "";
-    //Creacion de un listado de las tareas dependiendo del tamaño del arreglo 
+    //Creacion de un listado de las tareas dependiendo del tamaño del arreglo
     if (result.success && result.tasks.length > 0) {
       result.tasks.forEach((task) => {
         const estado = task.is_completed == 1 ? "Completada" : "Pendiente";
@@ -44,17 +44,42 @@ async function cargarTareas() {
           }
         });
 
-                //boton para editar
+        //boton para editar
         const btnEditar = document.createElement("button");
         btnEditar.textContent = "Editar";
-        btnEditar.addEventListener('click', () => {
+        btnEditar.addEventListener("click", () => {
           document.getElementById("editTaskId").value = task.id;
           document.getElementById("editTitle").value = task.title;
-          document.getElementById("editDescription").value = task.description ?? "";
+          document.getElementById("editDescription").value =
+            task.description ?? "";
           document.getElementById("editModal").style.display = "flex";
         });
 
-        // impresion de los valores de cada campo 
+        //botoncito tipo toogle para el estado de la tarea
+        const btnToggle = document.createElement("button");
+        btnToggle.textContent = task.is_completed == 1 ? "Marcar como pendiente" : "Marcar como completada";
+
+        btnToggle.addEventListener("click", async () => {
+          const formData = new FormData();
+          formData.append("id", task.id);
+          formData.append("is_completed", task.is_completed == 1 ? 0 : 1);
+
+          const res = await fetch("/TaskManager/app/controllers/TaskController.php?action=toggle",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          const result = await res.json();
+          if (result.success) {
+            cargarTareas();
+          } else {
+            alert("Error al cambiar el estado");
+          }
+        });
+
+        // impresion de los valores de cada campo
         div.innerHTML = `
                         <strong>${task.title}</strong><br>
                         <em>${task.description ?? "Sin descripción"}</em><br>
@@ -62,10 +87,11 @@ async function cargarTareas() {
                         Creada: ${fecha}
                     `;
 
-                //uniendo los diferentes elemonts al nodo pricnipal dhaaaa
+        //uniendo los diferentes elemonts al nodo pricnipal dhaaaa
         div.appendChild(document.createElement("br"));
         div.appendChild(btnEliminar);
         div.appendChild(btnEditar);
+        div.appendChild(btnToggle);
         div.appendChild(document.createElement("hr"));
         container.appendChild(div);
       });
@@ -74,16 +100,15 @@ async function cargarTareas() {
     }
   } catch (error) {
     console.error("Error al cargar tareas:", error);
-    document.getElementById("tasklist").textContent =
-      "No se pudieron cargar las tareas.";
+    document.getElementById("tasklist").textContent = "No se pudieron cargar las tareas.";
   }
 }
 
 document.addEventListener("DOMContentLoaded", cargarTareas);
 
-//para guardar los cambis realizdos en el modal papito bello 
+//para guardar los cambis realizdos en el modal papito bello
 
-document.getElementById("ediForm").addEventListener('submit', async(e) => {
+document.getElementById("ediForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const id = document.getElementById("editTaskId").value;
@@ -95,19 +120,23 @@ document.getElementById("ediForm").addEventListener('submit', async(e) => {
   formData.append("title", title);
   formData.append("description", description);
 
-  const res = await fetch("/TaskManager/app/controllers/TaskController.php?action=update", {
-    method: "POST",
-    body: formData,
-  });
+  const res = await fetch("/TaskManager/app/controllers/TaskController.php?action=update",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
 
   const result = await res.json();
 
-  if(result.success) {
+  if (result.success) {
     alert("Tarea actualizada correctamente");
+    document.getElementById("editModal").style.display = "none";
+    cargarTareas();
   }
 });
 
-//para cancelar el modal 
-document.getElementById("cancelEdit").addEventListener('click', () => {
-  document.getElementById("editModal").style.display = "none"
+//para cancelar el modal
+document.getElementById("cancelEdit").addEventListener("click", () => {
+  document.getElementById("editModal").style.display = "none";
 });

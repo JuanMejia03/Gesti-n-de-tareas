@@ -18,18 +18,25 @@ class Task
         $stmt = $db->prepare("INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)");
         return $stmt->execute([$user_id, $title, $description]);
     }
-    
+
     public function delete($task_id, $user_id)
     {
         $db = getConnection();
         $stmt = $db->prepare("DELETE FROM tasks WHERE id = ? AND user_id = ?");
-        return $stmt->execute( [$task_id, $user_id]);
+        return $stmt->execute([$task_id, $user_id]);
     }
 
     public function update($task_id, $user_id, $title, $description)
     {
         $db = getConnection();
-        $stmt = $db->prepare("UPDATE task SET title = ?, decription = ? WHERE id = ? and user_id = ?");
+        $stmt = $db->prepare("UPDATE tasks SET title = ?, description = ? WHERE id = ? and user_id = ?");
         return $stmt->execute([$title, $description, $task_id, $user_id]);
+    }
+
+    public function toggleStatus($task_id, $user_id, $is_completed)
+    {
+        $db = getConnection();
+        $stmt = $db->prepare("UPDATE tasks SET is_completed = ? WHERE id = ? AND user_id = ?");
+        return $stmt->execute([$is_completed, $task_id, $user_id]);
     }
 }

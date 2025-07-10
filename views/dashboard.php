@@ -15,7 +15,8 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Tareas</title>
-    <link rel="strylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -29,29 +30,16 @@ if (!isset($_SESSION['user_id'])) {
 
     <hr>
 
-    <div id="editModal" style="    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;">
-        <div id="div2" style="    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;">
+    <div id="editModal">
             <h3>Editar tarea</h3>
             <form id="ediForm">
-                <input type="text" id="editTaskId">
+                <input type="text" id="editTaskId"><br>
 
-                <label for="editTitle">Titulo: </label>
+                <label for="editTitle">Titulo: </label><br>
                 <input type="text" id="editTitle" require><br><br>
 
                 <label for="editDescription">Descripción: </label>
-                <textarea0 id="editDescription" rows="4" cols="30"></textarea0><br><br>
+                <textarea id="editDescription" rows="4" cols="30"></textarea><br><br>
 
                 <button type="submit">Guardar</button>
                 <button type="button" id="cancelEdit">cancelar</button>
@@ -60,7 +48,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <script src="../assets/js/dashboard.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
