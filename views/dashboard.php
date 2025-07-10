@@ -19,30 +19,52 @@ if (!isset($_SESSION['user_id'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
 
-    <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['username']) ?></h2>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Task Manager</a>
+            <div class="d-flex">
+                <span class="navbar-text text-white me-3">
+                    <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['username']) ?></h2>
+                </span>
 
-    <div id="tasklist"></div>
+                <a href="/TaskManager/app/controllers/authController.php?action=logout">Cerrar sesión</a>
+                <a href="/TaskManager/views/task/create.php">crear tarea</a>
+            </div>
+        </div>
+    </nav>
 
-    <a href="/TaskManager/app/controllers/authController.php?action=logout">Cerrar sesión</a>
-    <a href="/TaskManager/views/task/create.php">crear tarea</a>
-
+    <main class="container my-4">
+        <h2 class="mb-4">Tus tareas</h2>
+        <div id="tasklist" class="row gy-3"></div>
+    </main>
     <hr>
 
-    <div id="editModal">
-            <h3>Editar tarea</h3>
-            <form id="ediForm">
-                <input type="text" id="editTaskId"><br>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="ediForm">
+                <div>
+                    <h5 class="modal-title" id="editModalLabel">Editar tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editTaskId" />
 
-                <label for="editTitle">Titulo: </label><br>
-                <input type="text" id="editTitle" require><br><br>
+                    <div class="mb-3">
+                        <label for="editTitle" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="editTitle" require />
+                    </div>
 
-                <label for="editDescription">Descripción: </label>
-                <textarea id="editDescription" rows="4" cols="30"></textarea><br><br>
-
-                <button type="submit">Guardar</button>
-                <button type="button" id="cancelEdit">cancelar</button>
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="editDescription" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
             </form>
         </div>
     </div>
