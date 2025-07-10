@@ -2,10 +2,11 @@
 
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+/* if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
-}
+} */
+$pageTitle = 'Bienvenido, ' . $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
@@ -15,25 +16,25 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Tareas</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
+    <?php include_once 'layout/navbar.php'; ?>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!--     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">Task Manager</a>
             <div class="d-flex">
                 <span class="navbar-text text-white me-3">
-                    <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['username']) ?></h2>
+                    <h2>Bienvenido, //?php echo htmlspecialchars($_SESSION['username']) ?></h2>
                 </span>
 
                 <a href="/TaskManager/app/controllers/authController.php?action=logout">Cerrar sesión</a>
                 <a href="/TaskManager/views/task/create.php">crear tarea</a>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <main class="container my-4">
         <h2 class="mb-4">Tus tareas</h2>
