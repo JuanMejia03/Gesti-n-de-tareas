@@ -8,7 +8,7 @@ async function cargarTareas() {
 
     const container = document.getElementById("tasklist");
     container.innerHTML = "";
-    //Creacion de un listado de las tareas dependiendo del tamaño del arreglo
+    //definiendo el tamaño del arreglo con las treas en la base de datos
     if (result.success && result.tasks.length > 0) {
       result.tasks.forEach((task) => {
         const estado = task.is_completed == 1 ? "Completada" : "Pendiente";
@@ -32,9 +32,12 @@ async function cargarTareas() {
               <div class="d-flex justify-content-between mt-auto">
                 <button class="btn btn-danger btn-sm btnEliminar">Eliminar</button>
                 <button class="btn btn-primary btn-sm btnEditar">Editar</button>
-                <button class="btn btn-outline-secondary btn-sm btnToggle">${
-                  task.is_completed == 1 ? "Pendinete" : "Completar"
-                }</button>
+                <div class="toggle">
+                  <input type="checkbox" class="toggle-switch" id="btn-${task.id}" data-task-id="${task.id}" ${task.is_completed == 1 ? "checked" : ""}>
+                  <label for="btn-${task.id}">
+                    </span>
+                  </label>
+                </div>
                </div>
             </div>
           </div>
@@ -73,11 +76,11 @@ async function cargarTareas() {
           editModal.show();
         });
 
-        const btnToggle = card.querySelector(".btnToggle");
-        btnToggle.addEventListener("click", async () => {
+        const switchToggle = card.querySelector(".toggle-switch");
+        switchToggle.addEventListener("change", async () => {
           const formData = new FormData();
           formData.append("id", task.id);
-          formData.append("is_completed", task.is_completed == 1 ? 0 : 1);
+          formData.append("is_completed", switchToggle.checked ? 1 : 0);
 
           const res = await fetch(
             "/TaskManager/app/controllers/TaskController.php?action=toggle",

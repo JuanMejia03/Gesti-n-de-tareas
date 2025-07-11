@@ -1,0 +1,39 @@
+:root {
+  --sz: 15px;
+  --on: #03A9F4;
+  --on: #67f970;
+  --of: #fff0;
+  --of: #F44336;
+  --gr: #666666;
+  --tr: all 0.5s ease 0s;
+  --lg: var(--of);
+}	
+
+
+.toggle {
+  background: #eee;
+  width: 90px;
+  height: 40px;
+  padding: 4px;
+  border-radius: 50px;
+  margin: 50px;
+}
+
+label {
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  display: flex;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.25s ease 0s;
+}
+
+input {
+  display: none;
+}
+
+input:checked + label {
+  margin-left: 50px;
+  background: #47c;
+}

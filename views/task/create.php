@@ -2,10 +2,10 @@
 
 session_start();
 
-/* if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit;
-} */
+} 
 
 $pageTitle = 'Creación de nueva tarea';
 
@@ -18,6 +18,7 @@ $pageTitle = 'Creación de nueva tarea';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nueva Tarea</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link rel="stylesheet" href="../../assets/css/style.css"> -->
 
 </head>
 
