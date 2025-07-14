@@ -8,7 +8,6 @@ async function cargarTareas() {
 
     const container = document.getElementById("tasklist");
     container.innerHTML = "";
-    //definiendo el tamaño del arreglo con las treas en la base de datos
     if (result.success && result.tasks.length > 0) {
       result.tasks.forEach((task) => {
         const estado = task.is_completed == 1 ? "Completada" : "Pendiente";
@@ -17,7 +16,7 @@ async function cargarTareas() {
         const card = document.createElement("div");
         card.className = "col-md-4";
 
-        // creacion de las tareas dependiendo del array
+        
         card.innerHTML = `
           <div class="card ${
             task.is_completed == 1 ? "border-success" : "border-warning"
@@ -42,7 +41,10 @@ async function cargarTareas() {
             </div>
           </div>
         `;
+        
+        //Botones beibi
 
+        //eliminar
         const btnEliminar = card.querySelector(".btnEliminar");
         btnEliminar.addEventListener("click", async () => {
           if (!confirm(`¿Eliminar la tarea "${task.title}"?`)) return;
@@ -67,15 +69,16 @@ async function cargarTareas() {
           }
         });
 
+        //editar
         const btnEditar = card.querySelector(".btnEditar");
         btnEditar.addEventListener("click", () => {
           document.getElementById("editTaskId").value = task.id;
           document.getElementById("editTitle").value = task.title;
-          document.getElementById("editDescription").value =
-            task.description ?? "";
+          document.getElementById("editDescription").value = task.description ?? "";
           editModal.show();
         });
 
+        //toggle
         const switchToggle = card.querySelector(".toggle-switch");
         switchToggle.addEventListener("change", async () => {
           const formData = new FormData();
@@ -119,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.editModal = new bootstrap.Modal(modalElement);
 });
 
-//para guardar los cambis realizdos en el modal papito bello
+//para el modal papito bello
 
 document.getElementById("ediForm").addEventListener("submit", async (e) => {
   e.preventDefault();

@@ -8,7 +8,7 @@ require_once '../models/task.php';
 
 $action = $_GET['action'] ?? '';
 
-//para imprimir las dferentes tareas en la base de datos
+
 if ($action === 'list' && isset($_SESSION['user_id'])) {
     $taskModel = new Task();
     $tasks = $taskModel->getByUser($_SESSION['user_id']);
@@ -18,7 +18,7 @@ if ($action === 'list' && isset($_SESSION['user_id'])) {
 }
 
 
-//para la creacion de nuevas tareas
+
 if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['success' => false, 'message' => 'No autenticado']);
@@ -41,7 +41,6 @@ if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-//para la eliminacion de las tareas
 if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $task_id = $_POST['id'] ?? null;
@@ -59,7 +58,7 @@ if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-//para la edicion de tareas
+
 if($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $task_id = $_POST['id'] ?? null;
     $title = trim($_POST['title'] ?? '');
@@ -77,7 +76,7 @@ if($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-//para el boton toggle
+
 if ($action === 'toggle' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $task_id = $_POST['id'] ?? null;
     $is_completed = $_POST['is_completed'] ?? null;

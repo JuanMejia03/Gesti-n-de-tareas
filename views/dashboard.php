@@ -2,10 +2,10 @@
 
 session_start();
 
- if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
-} 
+}
 
 $pageTitle = 'Bienvenido, ' . $_SESSION['username'];
 ?>
@@ -18,13 +18,14 @@ $pageTitle = 'Bienvenido, ' . $_SESSION['username'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Tareas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<!--         <link rel="stylesheet" href="/TaskManager/assets/css/toggle.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body class="bg-light">
     <?php include_once 'layout/navbar.php'; ?>
 
-<!--     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <!--     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">Task Manager</a>
             <div class="d-flex">
@@ -49,7 +50,6 @@ $pageTitle = 'Bienvenido, ' . $_SESSION['username'];
             <form class="modal-content" id="ediForm">
                 <div>
                     <h5 class="modal-title" id="editModalLabel">Editar tarea</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="editTaskId" />
@@ -66,7 +66,7 @@ $pageTitle = 'Bienvenido, ' . $_SESSION['username'];
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
                 </div>
             </form>
         </div>
